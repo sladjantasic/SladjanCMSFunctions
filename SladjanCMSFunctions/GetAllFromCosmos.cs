@@ -12,11 +12,11 @@ using System.Linq;
 
 namespace SladjanCMSFunctions
 {
-    public static class GetFromCosmos
+    public static class GetAllFromCosmos
     {
-        [FunctionName("cosmosdevices")]
+        [FunctionName("GetAllFromCosmos")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "cosmosdevices")] HttpRequest req,
             [CosmosDB(
                     databaseName: "DeviceCatalog",
                     collectionName: "Devices",
@@ -25,13 +25,9 @@ namespace SladjanCMSFunctions
             )] IEnumerable<dynamic> cosmosdb,
             ILogger log)
         {
-            log.LogInformation("Requested item(s) found");
+            log.LogInformation("Requested items found");
 
-            string id = req.Query["id"];
-            var result = cosmosdb.Where(e => e.id == id).FirstOrDefault();
-            result ??= cosmosdb;
-
-            return new OkObjectResult(result);
+            return new OkObjectResult(cosmosdb);
         }
     }
 }

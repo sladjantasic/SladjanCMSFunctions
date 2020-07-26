@@ -12,9 +12,9 @@ namespace SladjanCMSFunctions
 {
     public static class SaveToCosmos
     {
-        [FunctionName("cosmosadd")]
+        [FunctionName("SaveToCosmos")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "cosmosdevices")] HttpRequest req,
             [CosmosDB(
                     databaseName: "DeviceCatalog",
                     collectionName: "Devices",
