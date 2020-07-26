@@ -7,24 +7,28 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SladjanCMSFunctions
 {
-    public static class GetOneFromCosmos
+    public static class GetFromCosmos
     {
-        [FunctionName("GetOneFromCosmos")]
+        [FunctionName("cosmosdevices")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             [CosmosDB(
                     databaseName: "DeviceCatalog",
                     collectionName: "Devices",
                     ConnectionStringSetting = "CosmosConnection",
-                    Id = "{Query.Id}"
-            )] dynamic cosmosdb,
+                    SqlQuery = "SELECT * FROM c"
+            )] IEnumerable<dynamic> cosmosdb,
             ILogger log)
         {
-            log.LogInformation("Requested item found");
-            return new OkObjectResult(cosmosdb);
+            log.LogInformation("Requested item(s) found");
+
+            string id = req.Query["id"];
+            return new OkObjectResult(cosmosdb.Where(e => e.id == id).FirstOrDefault());
         }
     }
 }
