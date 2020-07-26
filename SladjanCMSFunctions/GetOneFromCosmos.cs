@@ -12,7 +12,7 @@ namespace SladjanCMSFunctions
 {
     public static class GetOneFromCosmos
     {
-        [FunctionName("GetAllFromCosmos")]
+        [FunctionName("GetOneFromCosmos")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             [CosmosDB(
