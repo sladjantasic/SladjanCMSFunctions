@@ -28,7 +28,10 @@ namespace SladjanCMSFunctions
             log.LogInformation("Requested item(s) found");
 
             string id = req.Query["id"];
-            return new OkObjectResult(cosmosdb.Where(e => e.id == id).FirstOrDefault());
+            var result = cosmosdb.Where(e => e.id == id).FirstOrDefault();
+            result ??= cosmosdb;
+
+            return new OkObjectResult(result);
         }
     }
 }
