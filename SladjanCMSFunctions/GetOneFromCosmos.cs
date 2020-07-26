@@ -14,7 +14,7 @@ namespace SladjanCMSFunctions
     {
         [FunctionName("GetOneFromCosmos")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "cosmosdevices")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "cosmosdevices?id={id}")] HttpRequest req,
             [CosmosDB(
                     databaseName: "DeviceCatalog",
                     collectionName: "Devices",
