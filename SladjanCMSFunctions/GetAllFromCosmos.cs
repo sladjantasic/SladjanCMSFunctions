@@ -25,9 +25,13 @@ namespace SladjanCMSFunctions
             )] IEnumerable<dynamic> cosmosdb,
             ILogger log)
         {
-            log.LogInformation("Requested items found");
+            log.LogInformation("Requested item(s) found");
 
-            return new OkObjectResult(cosmosdb);
+            string id = req.Query["id"];
+            var result = cosmosdb.Where(e => e.id == id).FirstOrDefault();
+            result ??= cosmosdb;
+
+            return new OkObjectResult(result);
         }
     }
 }
